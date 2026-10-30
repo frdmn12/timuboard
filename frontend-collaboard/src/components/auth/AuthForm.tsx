@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { ApiError } from '@/lib/api'
 import { errorCode, errorMessage } from '@/lib/errors'
 import PasswordInput from './PasswordInput'
+import GoogleButton from './GoogleButton'
 import { useI18n } from '@/hooks/useI18n'
 import { tt } from '@/lib/i18n'
 
@@ -33,7 +34,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   const c = copy(t)[mode]
   const navigate = useNavigate()
   const location = useLocation()
-  const { login, register, resendVerification } = useAuth()
+  const { login, loginWithGoogle, register, resendVerification } = useAuth()
   const [errors, setErrors] = useState<Errors>({})
   const [busy, setBusy] = useState(false)
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null)
@@ -71,6 +72,12 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     }
   }
 
+  const handleGoogle = async (credential: string) => {
+    setErrors({}); setUnverifiedEmail(null); setBusy(true)
+    try { await loginWithGoogle(credential); navigate('/dashboard') }
+    catch (err) { setErrors({ form: errorMessage(err) }); setBusy(false) }
+  }
+
   const resend = async () => {
     if (!unverifiedEmail) return
     try { await resendVerification(unverifiedEmail); setResent(true) } catch (err) { setErrors({ form: errorMessage(err) }) }
@@ -95,6 +102,10 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         </div>
       )}
       <Button type="submit" size="lg" className="mt-2 w-full" disabled={busy}>{busy ? t('Memproses…', 'Working…') : c.cta}</Button>
+      <div role="separator" className="flex items-center gap-4 text-sm">
+        <span className="h-0.5 flex-1 rounded-full bg-card" />{t('atau', 'or')}<span className="h-0.5 flex-1 rounded-full bg-card" />
+      </div>
+      <GoogleButton onCredential={handleGoogle} />
       <p className="mt-2 text-center text-base text-muted-foreground">{c.alt[0]} <Link to={c.alt[2]} className="font-medium text-foreground underline underline-offset-4">{c.alt[1]}</Link></p>
     </form>
   )

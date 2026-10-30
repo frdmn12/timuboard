@@ -20,6 +20,10 @@ import {
 } from './dto/auth-response.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import {
+  GoogleTokenVerifier,
+  type GoogleProfile,
+} from './google-token.verifier';
 import { PasswordResetService } from './password-reset.service';
 import { EmailVerificationService } from './email-verification.service';
 import { SessionsService } from './sessions.service';
@@ -46,6 +50,7 @@ export class AuthService {
     private readonly mail: MailService,
     private readonly config: ConfigService,
     private readonly dataSource: DataSource,
+    private readonly google: GoogleTokenVerifier,
   ) {}
 
   private get saltRounds() {
@@ -71,11 +76,7 @@ export class AuthService {
       });
     } catch (err) {
       // Dua pendaftaran bersamaan dengan email sama: unique constraint yang menang.
-      if (
-        err instanceof QueryFailedError &&
-        (err.driverError as { code?: string })?.code === PG_UNIQUE_VIOLATION
-      )
-        throw this.emailTaken();
+      if (this.isUniqueViolation(err)) throw this.emailTaken();
       throw err;
     }
 
@@ -110,6 +111,76 @@ export class AuthService {
         message: 'Verify your email before signing in',
       });
     }
+    return this.startSession(user, userAgent);
+  }
+
+  /** Masuk/daftar lewat Google. Akun dicocokkan lewat `sub`, lalu lewat email (ditautkan), atau dibuat baru. */
+  async loginWithGoogle(credential: string, userAgent: string | null) {
+    const g = await this.google.verify(credential);
+    if (!g.emailVerified)
+      throw new UnauthorizedException({
+        code: 'GOOGLE_EMAIL_NOT_VERIFIED',
+        message: 'Your Google email is not verified',
+      });
+
+    let user: Awaited<ReturnType<typeof this.resolveGoogleUser>>;
+    try {
+      user = await this.resolveGoogleUser(g);
+    } catch (err) {
+      if (!this.isUniqueViolation(err)) throw err;
+      // Pembuatan akun bersamaan (login Google lain atau register) memenangkan unique constraint: cari ulang sekali.
+      user = await this.resolveGoogleUser(g);
+    }
+    return this.startSession(user, userAgent);
+  }
+
+  /** Satu transaksi: akun, penautan, pengosongan password, dan pencabutan sesi berhasil atau gagal bersama. */
+  private resolveGoogleUser(g: GoogleProfile) {
+    return this.dataSource.transaction(async (manager) => {
+      const existing = await this.users.findForGoogleLogin(
+        g.sub,
+        g.email,
+        manager,
+      );
+      if (!existing)
+        return this.users.create(
+          {
+            name: g.name,
+            email: g.email,
+            passwordHash: null,
+            googleSub: g.sub,
+            emailVerifiedAt: new Date(),
+          },
+          manager,
+        );
+      if (existing.googleSub === g.sub) return existing;
+      if (existing.googleSub)
+        throw new UnauthorizedException({
+          code: 'INVALID_GOOGLE_TOKEN',
+          message: 'Invalid Google sign-in',
+        });
+
+      const wasUnverified = !existing.emailVerifiedAt;
+      await this.users.linkGoogle(existing.id, g.sub, wasUnverified, manager);
+      if (wasUnverified)
+        await this.sessions.revokeAllForUser(existing.id, manager);
+      existing.googleSub = g.sub;
+      existing.emailVerifiedAt ??= new Date();
+      return existing;
+    });
+  }
+
+  private isUniqueViolation(err: unknown) {
+    return (
+      err instanceof QueryFailedError &&
+      (err.driverError as { code?: string })?.code === PG_UNIQUE_VIOLATION
+    );
+  }
+
+  private async startSession(
+    user: Parameters<typeof UserResponseDto.from>[0],
+    userAgent: string | null,
+  ) {
     const [accessToken, refreshToken] = await Promise.all([
       this.tokens.signAccessToken(user),
       this.sessions.create(user.id, userAgent),

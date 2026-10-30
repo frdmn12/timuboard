@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router'
-import { AuthProvider } from './hooks/useAuth'
+import { AuthProvider } from './components/auth/AuthProvider'
 import { ProfileProvider } from './hooks/useProfile'
 import Landing from './pages/Landing'
 import Auth from './pages/Auth'
