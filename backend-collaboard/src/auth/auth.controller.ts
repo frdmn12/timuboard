@@ -28,6 +28,7 @@ import {
   RefreshResponseDto,
   RegisterResponseDto,
 } from './dto/auth-response.dto';
+import { GoogleLoginDto } from './dto/google-login.dto';
 import { LoginDto } from './dto/login.dto';
 import { ForgotPasswordDto, ResetPasswordDto } from './dto/password-reset.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -96,6 +97,33 @@ export class AuthController {
   ): Promise<LoginResponseDto> {
     const { response, refreshToken } = await this.auth.login(
       dto,
+      req.get('user-agent') ?? null,
+    );
+    this.setRefreshCookie(res, refreshToken);
+    return response;
+  }
+
+  @ApiOperation({
+    summary: 'Login/daftar dengan Google',
+    description:
+      'Menukar ID token Google (`credential` dari Google Identity Services) dengan sesi yang sama seperti `POST /auth/login`. Akun baru dibuat otomatis; akun dengan email sama ditautkan.\n\nGalat domain: `INVALID_GOOGLE_TOKEN` (401), `GOOGLE_EMAIL_NOT_VERIFIED` (401).',
+  })
+  @ApiEnvelopeResponse(LoginResponseDto, {
+    description: 'Login berhasil; cookie refresh token dipasang.',
+  })
+  @ApiErrorResponses(400, [
+    401,
+    'Token Google tidak valid / email belum terverifikasi.',
+  ])
+  @Post('google')
+  @HttpCode(200)
+  async google(
+    @Body() dto: GoogleLoginDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<LoginResponseDto> {
+    const { response, refreshToken } = await this.auth.loginWithGoogle(
+      dto.credential,
       req.get('user-agent') ?? null,
     );
     this.setRefreshCookie(res, refreshToken);

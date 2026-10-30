@@ -7,6 +7,7 @@ import { MailModule } from '../mail/mail.module';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { GoogleTokenVerifier } from './google-token.verifier';
 import { EmailVerificationService } from './email-verification.service';
 import { EmailVerificationToken } from './email-verification-token.entity';
 import { PasswordResetService } from './password-reset.service';
@@ -44,6 +45,7 @@ import { TokenService } from './token.service';
     SessionsService,
     EmailVerificationService,
     PasswordResetService,
+    GoogleTokenVerifier,
     JwtStrategy,
   ],
 })

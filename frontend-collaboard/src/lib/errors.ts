@@ -14,6 +14,8 @@ const messages: Record<string, Txt> = {
   TASK_NOT_FOUND: ['Tugas tidak ditemukan.', 'Task not found.'],
   NOT_COMMENT_AUTHOR: ['Hanya penulis yang bisa mengedit komentar.', 'Only the author can edit this comment.'],
   COMMENT_NOT_FOUND: ['Komentar tidak ditemukan.', 'Comment not found.'],
+  INVALID_GOOGLE_TOKEN: ['Masuk dengan Google gagal. Coba lagi.', 'Google sign-in failed. Try again.'],
+  GOOGLE_EMAIL_NOT_VERIFIED: ['Email akun Google Anda belum terverifikasi.', 'Your Google account’s email isn’t verified.'],
   TOO_MANY_REQUESTS: ['Terlalu banyak percobaan. Tunggu semenit lalu coba lagi.', 'Too many attempts. Wait a minute and try again.'],
   NETWORK_ERROR: ['Tidak dapat terhubung ke server. Pastikan backend berjalan.', 'Can’t reach the server. Make sure the backend is running.'],
 }

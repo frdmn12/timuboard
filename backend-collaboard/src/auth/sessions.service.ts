@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Repository } from 'typeorm';
+import { EntityManager, IsNull, Repository } from 'typeorm';
 import { Session } from './session.entity';
 import { TokenService } from './token.service';
 
@@ -67,8 +67,9 @@ export class SessionsService {
     );
   }
 
-  async revokeAllForUser(userId: string) {
-    await this.sessions.update(
+  async revokeAllForUser(userId: string, manager?: EntityManager) {
+    const repo = manager ? manager.getRepository(Session) : this.sessions;
+    await repo.update(
       { userId, revokedAt: IsNull() },
       { revokedAt: new Date() },
     );

@@ -56,6 +56,9 @@ export class EnvironmentVariables {
   @IsUrl({ require_tld: false })
   FRONTEND_URL: string = 'http://localhost:5173';
 
+  /** Client ID OAuth Google (tipe Web). Tanpa ini, POST /auth/google menjawab 503. */
+  @IsOptional() @IsString() GOOGLE_CLIENT_ID?: string;
+
   @IsString() MAIL_HOST: string = 'localhost';
   @Type(() => Number) @IsInt() MAIL_PORT: number = 1025;
   @IsOptional() @IsString() MAIL_USER?: string;
