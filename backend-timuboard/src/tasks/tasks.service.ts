@@ -120,7 +120,7 @@ export class TasksService {
       }),
     );
     if (saved.assigneeId) {
-      void this.notifications.notify({
+      await this.notifications.notify({
         type: NotificationType.TASK_ASSIGNED,
         recipientIds: [saved.assigneeId],
         actorId: userId,
@@ -158,7 +158,7 @@ export class TasksService {
     if (Object.keys(patch).length)
       await this.tasks.update({ id: taskId }, patch);
     if (dto.assigneeId && dto.assigneeId !== before.assigneeId) {
-      void this.notifications.notify({
+      await this.notifications.notify({
         type: NotificationType.TASK_ASSIGNED,
         recipientIds: [dto.assigneeId],
         actorId: userId,

@@ -1,1 +1,3 @@
 .env
+# Pengaturan Claude Code pribadi
+.claude/settings.local.json
