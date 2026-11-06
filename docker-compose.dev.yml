@@ -1,10 +1,10 @@
 services:
   server:
     build:
-      context: ./backend-collaboard
+      context: ./backend-timuboard
       dockerfile: Dockerfile.dev
     volumes:
-      - ./backend-collaboard:/app
+      - ./backend-timuboard:/app
       - /app/node_modules
     ports:
       - "3000:3000"
@@ -28,10 +28,10 @@ services:
 
   client:
     build:
-      context: ./frontend-collaboard
+      context: ./frontend-timuboard
       dockerfile: Dockerfile.dev
     volumes:
-      - ./frontend-collaboard:/app
+      - ./frontend-timuboard:/app
       - /app/node_modules
     ports:
       - "5173:5173"

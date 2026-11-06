@@ -1,0 +1,69 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Timuboard design tokens (light). Dark values below. `.force-light` memaksa token terang di dalam tema gelap (mis. pratinjau produk di atas latar laut). */
+:root,
+.force-light {
+  --paper-white: #ffffff; --cloud-card: #ebf0f8; --ink: #222326; --charcoal: #1f2025; --body-gray: #747679;
+  --sky-top: #d2e5ff; --sky-bottom: #fff9ee;
+  --signal-gold: #ffca00; --coral-signal: #ffab94; --recovery-green: #31ce01; --metric-blue: #415eee; --sleep-lilac: #b9a6ff;
+
+  /* shadcn semantic variables → Timuboard tokens */
+  --background: var(--paper-white); --foreground: var(--ink);
+  --card: var(--cloud-card); --card-foreground: var(--ink);
+  --popover: var(--paper-white); --popover-foreground: var(--ink);
+  --primary: var(--charcoal); --primary-foreground: var(--cloud-card);
+  --secondary: var(--cloud-card); --secondary-foreground: var(--ink);
+  --muted: var(--cloud-card); --muted-foreground: var(--body-gray);
+  --accent: var(--cloud-card); --accent-foreground: var(--ink);
+  --destructive: var(--coral-signal);
+  --border: transparent; --input: var(--cloud-card); --ring: var(--metric-blue);
+  --radius: 16px;
+
+  --status-todo: var(--body-gray); --status-doing: var(--metric-blue); --status-review: var(--sleep-lilac);
+  --status-done: var(--recovery-green); --status-blocked: var(--coral-signal); --pinned: var(--signal-gold);
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  --paper-white: #121316; --cloud-card: #1d1f25; --ink: #f2f3f5; --charcoal: #f2f3f5; --body-gray: #9a9ca1;
+  --sky-top: #1e2b4a; --sky-bottom: #1f1d1a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background); --color-foreground: var(--foreground);
+  --color-card: var(--card); --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover); --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring);
+  --color-sky-top: var(--sky-top); --color-sky-bottom: var(--sky-bottom);
+  --color-status-todo: var(--status-todo); --color-status-doing: var(--status-doing);
+  --color-status-review: var(--status-review); --color-status-done: var(--status-done);
+  --color-status-blocked: var(--status-blocked); --color-pinned: var(--pinned);
+  --color-lilac: var(--sleep-lilac); --color-coral: var(--coral-signal); --color-green: var(--recovery-green); --color-blue: var(--metric-blue);
+
+  --radius-image: 16px; --radius-card: 24px; --radius-nav: 32px;
+  --shadow-lift: rgba(0, 0, 0, 0.25) 0 0 16px -8px;
+  --shadow-float: rgba(0, 0, 0, 0.15) 0 2px 16px 0;
+  --font-sans: -apple-system, BlinkMacSystemFont, Inter, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { font-family: var(--font-sans); }
+  body { @apply bg-background text-foreground px-4 text-lg leading-snug antialiased; margin: 0; }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+}
+
+/* Typography scale (weight never above 600, tracking -0.03em on display) */
+@utility text-hero { font-weight: 600; font-size: clamp(44px, 8vw, 80px); line-height: 1; letter-spacing: -0.03em; text-wrap: balance; }
+@utility text-display { font-weight: 600; font-size: clamp(36px, 6vw, 64px); line-height: 1; letter-spacing: -0.03em; text-wrap: balance; }
+@utility text-lead { font-size: clamp(18px, 2.4vw, 24px); line-height: 1.3; color: var(--muted-foreground); text-wrap: pretty; }
+@utility bg-sky { background: linear-gradient(var(--sky-top), var(--sky-bottom)); }

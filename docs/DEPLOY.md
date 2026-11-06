@@ -5,7 +5,7 @@
 
 ## 0. Vercel (sekali saja)
 
-1. Vercel → Add New Project → pilih repo → **Root Directory: `frontend-collaboard`** (Vite terdeteksi otomatis).
+1. Vercel → Add New Project → pilih repo → **Root Directory: `frontend-timuboard`** (Vite terdeteksi otomatis).
 2. Environment Variables: `VITE_API_URL` = `https://api.domainmu.com` (dibakar saat build; ubah lalu redeploy kalau berganti).
 3. Settings → Domains: pasang `app.domainmu.com`. **Wajib custom domain satu induk dengan API.** Cookie refresh token memakai `SameSite=Strict`; dengan `xxx.vercel.app` + `api.domainmu.com` login hilang setiap refresh halaman.
 4. `vercel.json` sudah memuat rewrite SPA, supaya `/verifikasi?token=...` tidak 404.
@@ -15,7 +15,7 @@
 ```bash
 curl -fsSL https://get.docker.com | sh
 adduser deploy && usermod -aG docker deploy
-mkdir -p /opt/collaboard /opt/proxy && chown deploy /opt/collaboard /opt/proxy
+mkdir -p /opt/timuboard /opt/proxy && chown deploy /opt/timuboard /opt/proxy
 docker network create web   # jaringan bersama antara Caddy dan semua aplikasi
 # firewall: hanya 22, 80, 443
 ufw allow OpenSSH && ufw allow 80 && ufw allow 443 && ufw enable
@@ -28,7 +28,7 @@ ssh-keygen -t ed25519 -f collab_deploy -N ""
 ssh-copy-id -i collab_deploy.pub deploy@IP_VPS
 ```
 
-Buat `/opt/collaboard/.env` di VPS (JANGAN di-commit). Isi dari `.env.example`, dengan perbedaan:
+Buat `/opt/timuboard/.env` di VPS (JANGAN di-commit). Isi dari `.env.example`, dengan perbedaan:
 
 ```
 POSTGRES_PASSWORD=<acak panjang>
@@ -60,13 +60,13 @@ Aplikasi baru: tambah satu blok di `Caddyfile` (domain → `nama-container:port`
 
 ## 3. Rollback
 
-Di VPS: `IMAGE_REPO=ghcr.io/frdmn12/collaboard IMAGE_TAG=<sha-lama> docker compose -f docker-compose.prod.yml up -d`
+Di VPS: `IMAGE_REPO=ghcr.io/frdmn12/timuboard IMAGE_TAG=<sha-lama> docker compose -f docker-compose.prod.yml up -d`
 
 ## Migrasi database
 
 Production `synchronize` mati; skema berubah lewat migrasi yang jalan otomatis saat server start. Setelah mengubah entity:
 
 ```bash
-cd backend-collaboard
+cd backend-timuboard
 npm run migration:generate -- src/migrations/NamaPerubahan   # jalankan di DB kosong yang sudah di-`npm run migration:run`, bukan DB dev (dev memakai synchronize)
 ```

@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches: [master]
-    paths: ['backend-collaboard/**', 'docker-compose.prod.yml', '.github/workflows/**'] # frontend dideploy Vercel sendiri
+    paths: ['backend-timuboard/**', 'docker-compose.prod.yml', '.github/workflows/**'] # frontend dideploy Vercel sendiri
   workflow_dispatch: # tombol "Run workflow" manual di tab Actions
 
 concurrency: deploy # jangan ada dua deploy berjalan bersamaan
@@ -28,8 +28,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: backend-collaboard
-          file: backend-collaboard/Dockerfile.prod
+          context: backend-timuboard
+          file: backend-timuboard/Dockerfile.prod
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/server:${{ github.sha }}
@@ -50,12 +50,12 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
       - name: Kirim file compose
-        run: scp docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/collaboard/
+        run: scp docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/timuboard/
       - name: Tarik image dan restart
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} bash -s <<'REMOTE'
           set -e
-          cd /opt/collaboard
+          cd /opt/timuboard
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
           export IMAGE_REPO=ghcr.io/${{ github.repository }} IMAGE_TAG=${{ github.sha }}
           docker compose -f docker-compose.prod.yml pull
