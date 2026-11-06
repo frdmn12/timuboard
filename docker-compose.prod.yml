@@ -1,4 +1,4 @@
-# Backend saja (frontend ada di Vercel; HTTPS oleh Caddy di /opt/proxy). Dipakai di VPS (di-copy oleh deploy.yml ke /opt/collaboard). Rahasia ada di /opt/collaboard/.env, bukan di repo.
+# Backend saja (frontend ada di Vercel; HTTPS oleh Caddy di /opt/proxy). Dipakai di VPS (di-copy oleh deploy.yml ke /opt/collaboard). Rahasia ada di /opt/collaboard/.env, bukan di repo. Folder di VPS sengaja tetap /opt/collaboard: nama folder menentukan nama project compose dan volume Postgres, jadi mengganti nama folder membuat database baru yang kosong.
 # Dijalankan: IMAGE_REPO=ghcr.io/<owner>/<repo> IMAGE_TAG=<sha> docker compose -f docker-compose.prod.yml up -d
 services:
   server:

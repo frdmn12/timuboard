@@ -5,7 +5,7 @@
 
 ## 0. Vercel (sekali saja)
 
-1. Vercel → Add New Project → pilih repo → **Root Directory: `frontend-collaboard`** (Vite terdeteksi otomatis).
+1. Vercel → Add New Project → pilih repo → **Root Directory: `frontend-timuboard`** (Vite terdeteksi otomatis).
 2. Environment Variables: `VITE_API_URL` = `https://api.domainmu.com` (dibakar saat build; ubah lalu redeploy kalau berganti).
 3. Settings → Domains: pasang `app.domainmu.com`. **Wajib custom domain satu induk dengan API.** Cookie refresh token memakai `SameSite=Strict`; dengan `xxx.vercel.app` + `api.domainmu.com` login hilang setiap refresh halaman.
 4. `vercel.json` sudah memuat rewrite SPA, supaya `/verifikasi?token=...` tidak 404.
@@ -60,13 +60,13 @@ Aplikasi baru: tambah satu blok di `Caddyfile` (domain → `nama-container:port`
 
 ## 3. Rollback
 
-Di VPS: `IMAGE_REPO=ghcr.io/frdmn12/collaboard IMAGE_TAG=<sha-lama> docker compose -f docker-compose.prod.yml up -d`
+Di VPS: `IMAGE_REPO=ghcr.io/frdmn12/timuboard IMAGE_TAG=<sha-lama> docker compose -f docker-compose.prod.yml up -d`
 
 ## Migrasi database
 
 Production `synchronize` mati; skema berubah lewat migrasi yang jalan otomatis saat server start. Setelah mengubah entity:
 
 ```bash
-cd backend-collaboard
+cd backend-timuboard
 npm run migration:generate -- src/migrations/NamaPerubahan   # jalankan di DB kosong yang sudah di-`npm run migration:run`, bukan DB dev (dev memakai synchronize)
 ```

@@ -15,12 +15,12 @@ docker compose up postgre & redis
 then running the project
 
 ```
-cd backend-collaboard
+cd backend-timuboard
 npm run start:dev
 ```
 
 ```
-cd frontend-collaboard
+cd frontend-timuboard
 npm run dev
 ```
 
@@ -45,7 +45,7 @@ Atau hanya infrastruktur di Docker, backend di host:
 
 ```
 docker compose up -d postgres redis mailpit adminer   # Postgres :5433, Redis :6379, Mailpit SMTP :1025 / inbox http://localhost:8025, Adminer http://localhost:8080
-cd backend-collaboard && npm run start:dev
+cd backend-timuboard && npm run start:dev
 npm test                                # unit
 npm run test:e2e                        # e2e nyata (butuh postgres + mailpit)
 ```
@@ -170,7 +170,7 @@ Perubahan tetap ditulis lewat REST; server menyiarkan hasilnya lewat **Socket.IO
 
 ## Playground (tamu tanpa login)
 
-Laman publik `/playground` (tombol "Coba di Playground" di landing): pengunjung mencoba papan demo bersama, mengirim reaksi, dan melihat siapa saja yang sedang online, tanpa akun. Kode: `backend-collaboard/src/playground/`, `frontend-collaboard/src/pages/Playground.tsx`.
+Laman publik `/playground` (tombol "Coba di Playground" di landing): pengunjung mencoba papan demo bersama, mengirim reaksi, dan melihat siapa saja yang sedang online, tanpa akun. Kode: `backend-timuboard/src/playground/`, `frontend-timuboard/src/pages/Playground.tsx`.
 
 **Desain beban:** pengunjung dibagi ke **ruang** berisi maksimal 50 orang (ruang bernomor terkecil yang belum penuh). Server hanya mengenal nomor; frontend menampilkannya sebagai nama pulau (`roomName` di `data/playground.ts`: 1 = Bali, 2 = Lombok, …, ke-17 = Bali 2). Daftar orang, kursor, reaksi, dan papan demo hanya disiarkan di dalam ruang, jadi biayanya tetap per ruang berapa pun jumlah pengunjung. Yang global hanya jumlah online:
 
@@ -207,4 +207,4 @@ Batas yang diketahui: hitungan ruang bisa basi sampai 2 detik, jadi saat lonjaka
 
 **Lokasi (opt-in):** mati secara bawaan; tamu menyalakannya lewat toggle "Tampilkan lokasiku" (pilihan diingat di `localStorage`). Klien mengirim zona waktu perangkat (`Intl.DateTimeFormat().resolvedOptions().timeZone`), bukan GPS atau IP, jadi hanya perkiraan dan bisa dipalsukan. Server hanya menerima nama zona IANA yang valid (teks bebas ditolak), tidak menyimpannya di Redis atau log, dan hanya meneruskannya ke ruang yang sama. Tampil hanya di daftar online (tidak ikut payload kursor): `Indonesia · WIB/WITA/WIT` untuk zona Indonesia, selain itu nama kota zona (`Asia/Tokyo` = Tokyo).
 
-Judul kartu demo ada di `frontend-collaboard/src/data/playground.ts`; id dan status awalnya harus sama dengan `DEMO_TASKS` di gateway. Tes: `npx jest --config test/jest-e2e.json test/playground.e2e-spec.ts`.
+Judul kartu demo ada di `frontend-timuboard/src/data/playground.ts`; id dan status awalnya harus sama dengan `DEMO_TASKS` di gateway. Tes: `npx jest --config test/jest-e2e.json test/playground.e2e-spec.ts`.

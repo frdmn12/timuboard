@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://timuboard.timulabs.dev/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/en</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/playground</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/playground" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en/playground" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/playground" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/en/playground</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/playground" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en/playground" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/playground" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/daftar</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/daftar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en/daftar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/daftar" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/en/daftar</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/daftar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en/daftar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/daftar" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/masuk</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/masuk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en/masuk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/masuk" />
+  </url>
+  <url>
+    <loc>https://timuboard.timulabs.dev/en/masuk</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://timuboard.timulabs.dev/masuk" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://timuboard.timulabs.dev/en/masuk" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://timuboard.timulabs.dev/masuk" />
+  </url>
+</urlset>

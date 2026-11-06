@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches: [master]
-    paths: ['backend-collaboard/**', 'docker-compose.prod.yml', '.github/workflows/**'] # frontend dideploy Vercel sendiri
+    paths: ['backend-timuboard/**', 'docker-compose.prod.yml', '.github/workflows/**'] # frontend dideploy Vercel sendiri
   workflow_dispatch: # tombol "Run workflow" manual di tab Actions
 
 concurrency: deploy # jangan ada dua deploy berjalan bersamaan
@@ -28,8 +28,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: backend-collaboard
-          file: backend-collaboard/Dockerfile.prod
+          context: backend-timuboard
+          file: backend-timuboard/Dockerfile.prod
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/server:${{ github.sha }}

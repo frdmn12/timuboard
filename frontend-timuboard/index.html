@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Nilai bawaan beranda. Laman lain menimpanya lewat useSeo (src/hooks/useSeo.ts); teks harus sama dengan DEFAULT_* di sana. -->
+    <title>Timuboard: papan kerja tim real-time</title>
+    <meta name="description" content="Atur tugas, pantau progres, dan lihat siapa mengerjakan apa dalam satu papan bersama. Perubahan tampil langsung untuk seluruh tim." />
+    <link rel="canonical" href="https://timuboard.timulabs.dev/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)" />
+
+    <!-- Pratinjau tautan (WhatsApp, LinkedIn, X, Slack): crawler ini tidak menjalankan JS. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Timuboard" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="Timuboard: papan kerja tim real-time" />
+    <meta property="og:description" content="Atur tugas, pantau progres, dan lihat siapa mengerjakan apa dalam satu papan bersama. Perubahan tampil langsung untuk seluruh tim." />
+    <meta property="og:url" content="https://timuboard.timulabs.dev/" />
+    <meta property="og:image" content="https://timuboard.timulabs.dev/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Timuboard: semua kerja tim, satu papan." />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Timuboard",
+        "url": "https://timuboard.timulabs.dev/",
+        "description": "Papan kerja bersama untuk tim: tugas, status, progres, dan orang dalam satu tampilan, diperbarui secara real-time.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "id"
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
