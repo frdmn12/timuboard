@@ -1,3 +1,3 @@
-# Timuboard
+# Timuboard API
 
-Timuboard is a project for develop an project
+NestJS backend for Timuboard. Setup, scripts, and API docs are in the [root README](../README.md).
