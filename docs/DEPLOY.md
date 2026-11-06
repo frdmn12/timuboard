@@ -15,7 +15,7 @@
 ```bash
 curl -fsSL https://get.docker.com | sh
 adduser deploy && usermod -aG docker deploy
-mkdir -p /opt/timuboard /opt/proxy && chown deploy /opt/timuboard /opt/proxy
+mkdir -p /opt/collaboard /opt/proxy && chown deploy /opt/collaboard /opt/proxy
 docker network create web   # jaringan bersama antara Caddy dan semua aplikasi
 # firewall: hanya 22, 80, 443
 ufw allow OpenSSH && ufw allow 80 && ufw allow 443 && ufw enable
@@ -28,7 +28,7 @@ ssh-keygen -t ed25519 -f collab_deploy -N ""
 ssh-copy-id -i collab_deploy.pub deploy@IP_VPS
 ```
 
-Buat `/opt/timuboard/.env` di VPS (JANGAN di-commit). Isi dari `.env.example`, dengan perbedaan:
+Buat `/opt/collaboard/.env` di VPS (JANGAN di-commit). Isi dari `.env.example`, dengan perbedaan:
 
 ```
 POSTGRES_PASSWORD=<acak panjang>

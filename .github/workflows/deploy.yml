@@ -50,12 +50,12 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
       - name: Kirim file compose
-        run: scp docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/timuboard/
+        run: scp docker-compose.prod.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/collaboard/
       - name: Tarik image dan restart
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} bash -s <<'REMOTE'
           set -e
-          cd /opt/timuboard
+          cd /opt/collaboard
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
           export IMAGE_REPO=ghcr.io/${{ github.repository }} IMAGE_TAG=${{ github.sha }}
           docker compose -f docker-compose.prod.yml pull
